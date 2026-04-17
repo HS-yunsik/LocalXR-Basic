@@ -61,8 +61,8 @@ public class PosterSwipeUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (closeButton != null)
             closeButton.onClick.AddListener(Hide);
-        if (overlay != null)
-            overlay.SetActive(false);
+        // overlay는 씬에 비활성 상태로 저장되어 있으므로 여기서 건드리지 않음.
+        // (SetActive(false) 호출 시 Viewport도 비활성화되어 코루틴 실행 불가)
     }
 
     // ── 공개 API ───────────────────────────────────────────────────────────
@@ -72,15 +72,8 @@ public class PosterSwipeUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (overlay == null || data == null) return;
         overlay.SetActive(true);
-        // overlay 활성화 직후엔 Canvas 레이아웃이 아직 계산 안 됨
-        // → 1프레임 대기 후 빌드해야 pageWidth가 정확히 나옴
-        StartCoroutine(ShowAfterLayout(data));
-    }
-
-    private IEnumerator ShowAfterLayout(PosterData data)
-    {
-        yield return null;                   // 레이아웃 계산 대기
-        Canvas.ForceUpdateCanvases();
+        // SetActive 직후 레이아웃을 동기식으로 강제 계산해 pageWidth를 올바르게 읽음
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         BuildPosters(data);
         GoToPage(0, false);
     }
