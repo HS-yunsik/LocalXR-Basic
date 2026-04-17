@@ -72,6 +72,15 @@ public class PosterSwipeUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (overlay == null || data == null) return;
         overlay.SetActive(true);
+        // overlay 활성화 직후엔 Canvas 레이아웃이 아직 계산 안 됨
+        // → 1프레임 대기 후 빌드해야 pageWidth가 정확히 나옴
+        StartCoroutine(ShowAfterLayout(data));
+    }
+
+    private IEnumerator ShowAfterLayout(PosterData data)
+    {
+        yield return null;                   // 레이아웃 계산 대기
+        Canvas.ForceUpdateCanvases();
         BuildPosters(data);
         GoToPage(0, false);
     }
@@ -90,8 +99,6 @@ public class PosterSwipeUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         CleanUpPosters();
 
-        // 레이아웃 강제 갱신 후 Viewport 너비 읽기
-        Canvas.ForceUpdateCanvases();
         pageWidth = GetComponent<RectTransform>().rect.width;
 
         int spriteCount = (data.posterSprites != null) ? data.posterSprites.Length : 0;
