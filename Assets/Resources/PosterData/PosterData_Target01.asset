@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078faf2f15911ba43a3050413109306f, type: 3}
+  m_Name: PosterData_Target01
+  m_EditorClassIdentifier: Assembly-CSharp::PosterData
+  targetName: Napoleon
+  posterSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  placeholderColors:
+  - {r: 0.22, g: 0.4, b: 0.78, a: 1}
+  - {r: 0.78, g: 0.28, b: 0.22, a: 1}
+  - {r: 0.22, g: 0.68, b: 0.4, a: 1}
+  - {r: 0.78, g: 0.52, b: 0.18, a: 1}
+  - {r: 0.52, g: 0.22, b: 0.78, a: 1}
